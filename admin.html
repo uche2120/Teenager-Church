@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teenager Church | Admin Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+  <script defer src="assets/js/admin.js"></script>
+</head>
+<body>
+  <header class="header">
+    <div class="container">
+      <div class="logo">Teenager Church</div>
+      <nav class="nav">
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="posts.html">Posts</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="admin-login" id="admin-login">
+      <div class="container">
+        <h2>Admin Login</h2>
+        <form id="login-form">
+          <input type="email" id="admin-email" placeholder="Email" required>
+          <input type="password" id="admin-password" placeholder="Password" required>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
+      </div>
+    </section>
+    <section class="admin-dashboard" id="admin-dashboard" style="display:none;">
+      <div class="container">
+        <h2>Dashboard</h2>
+        <button id="logout-btn" class="btn btn-secondary">Logout</button>
+        <div class="admin-actions">
+          <button id="add-post-btn" class="btn btn-primary">Add Post/Event</button>
+        </div>
+        <div id="admin-posts-list">
+          <!-- Admin posts/events management will be loaded here -->
+        </div>
+        <div id="admin-comments-list">
+          <!-- Admin comment moderation will be loaded here -->
+        </div>
+      </div>
+    </section>
+  </main>
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-info">
+        <p>Contact: info@teenagerchurch.com | +234 123 4567</p>
+        <div class="social-links">
+          <a href="#" aria-label="Instagram"><img src="assets/images/instagram.svg" alt="Instagram"></a>
+          <a href="#" aria-label="YouTube"><img src="assets/images/youtube.svg" alt="YouTube"></a>
+        </div>
+      </div>
+      <p class="copyright">&copy; 2025 Teenager Church. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

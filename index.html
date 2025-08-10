@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teenager Church | Home</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+  <script defer src="assets/js/main.js"></script>
+</head>
+<body> 
+  <header class="header">
+    <div class="container header-modern" style="background:rgba(255,255,255,0.75); backdrop-filter:blur(12px); border-radius:24px; box-shadow:0 2px 16px rgba(76,175,80,0.10); padding:1.1rem 1.2rem; margin-top:1.2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem;">
+      <div class="logo-modern" style="display:flex; align-items:center; gap:1rem;">
+        <img src="assets/images/AIP_6742.jpg" alt="Logo" style="width:48px; height:48px; border-radius:50%; object-fit:cover; box-shadow:0 2px 8px rgba(76,175,80,0.10);">
+        <span style="font-size:1.45rem; font-weight:700; color:#388e3c; letter-spacing:-1px;">Teenager Church</span>
+      </div>
+      <nav class="nav-modern" style="display:flex; align-items:center; gap:1.2rem;">
+        <button class="menu-btn" aria-label="Open menu" onclick="document.querySelector('.nav-modern ul').classList.toggle('open')" style="background:none; border:none; font-size:2rem; color:#388e3c; display:none; cursor:pointer;">&#9776;</button>
+        <ul style="display:flex; gap:1.2rem; list-style:none; margin:0; padding:0;">
+          <li><a href="index.html" class="active" style="font-weight:600; color:#0288d1; background:#e3f2fd; border-radius:12px; padding:0.5rem 1rem; text-decoration:none;">Home</a></li>
+          <li><a href="posts.html" style="font-weight:600; color:#388e3c; border-radius:12px; padding:0.5rem 1rem; text-decoration:none;">Posts</a></li>
+          <li><a href="about.html" style="font-weight:600; color:#388e3c; border-radius:12px; padding:0.5rem 1rem; text-decoration:none;">About</a></li>
+          <li><a href="contact.html" style="font-weight:600; color:#388e3c; border-radius:12px; padding:0.5rem 1rem; text-decoration:none;">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-modern" style="background:linear-gradient(120deg,#e3f2fd 60%,#e8f5e9 100%); border-radius:32px; box-shadow:0 4px 32px rgba(76,175,80,0.10); padding:3.5rem 1.2rem 2.5rem 1.2rem; display:flex; flex-wrap:wrap; align-items:center; gap:2.5rem; justify-content:center; margin-bottom:2rem;">
+        <div class="hero-img" style="flex:1 1 320px; min-width:220px; max-width:420px; display:flex; align-items:center; justify-content:center; position:relative;">
+          <img id="hero-slider-img" src="assets/images/AIP_6742.jpg" alt="Hero Teenager Church" style="width:100%; max-width:340px; border-radius:28px; box-shadow:0 4px 32px rgba(76,175,80,0.13); object-fit:cover; aspect-ratio:4/5; transition:opacity 0.7s;">
+        </div>
+        <div class="hero-content-modern" style="flex:2 1 400px; min-width:220px; max-width:600px; display:flex; flex-direction:column; gap:1.2rem; align-items:flex-start; justify-content:center;">
+          <h1 style="color:#0288d1; font-size:2.7rem; font-weight:800; margin-bottom:0.7rem; letter-spacing:-2px;">Welcome to Teenager Church</h1>
+          <p style="color:#388e3c; font-size:1.25rem; font-weight:500; margin-bottom:0.7rem; line-height:1.6;">Empowering the next generation for Christ.</p>
+          <a href="posts.html" class="btn btn-primary" style="background:#388e3c; color:#fff; font-weight:600; font-size:1.15rem; border-radius:16px; padding:0.8rem 2.2rem; box-shadow:0 2px 8px rgba(76,175,80,0.10); text-decoration:none; transition:background 0.2s;">See What's New</a>
+        </div>
+      </div>
+  <script>
+    // Simple hero image slider
+    const heroImages = [
+      'assets/images/AIP_6742.jpg',
+      'assets/images/AIP_6838.jpg',
+      'assets/images/AIP_7256.jpg',
+      'assets/images/AIP_7280.jpg'
+    ];
+    let heroIndex = 0;
+    const heroImg = document.addEventListener ? document.getElementById('hero-slider-img') : null;
+    function showNextHeroImg() {
+      heroIndex = (heroIndex + 1) % heroImages.length;
+      const img = document.getElementById('hero-slider-img');
+      if (img) {
+        img.style.opacity = 0.5;
+        setTimeout(() => {
+          img.src = heroImages[heroIndex];
+          img.style.opacity = 1;
+        }, 400);
+      }
+    }
+    setInterval(showNextHeroImg, 3500);
+  </script>
+    </section>
+    <!-- <section class="intro"> -->
+      <div class="intro-modern" style="background:linear-gradient(135deg,#e8f5e9 60%,#e3f2fd 100%); border-radius:28px; box-shadow:0 4px 24px rgba(76,175,80,0.10); padding:2.2rem 1rem; margin-bottom:2rem; display:flex; flex-direction:column; align-items:center; gap:2rem;">
+        <div class="intro-logo" style="background:#fff; border-radius:50%; box-shadow:0 2px 12px rgba(76,175,80,0.12); width:90px; height:90px; display:flex; align-items:center; justify-content:center; margin-bottom:0.7rem;">
+          <img src="assets/images/AIP_6742.jpg" alt="Teenager Church Logo" style="width:70px; height:70px; border-radius:50%; object-fit:cover;">
+        </div>
+        <h2 style="color:#0288d1; font-size:2rem; font-weight:800; margin-bottom:0.5rem; text-align:center; letter-spacing:-1px;">About Teenager Church</h2>
+        <p style="color:#388e3c; font-size:1.13rem; font-weight:500; margin-bottom:0.7rem; text-align:center; max-width:480px; line-height:1.6;">
+          A vibrant, welcoming community for teens to grow in faith, discover purpose, and build lasting friendships.
+        </p>
+        <div class="intro-cards-modern" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:1.2rem; width:100%; max-width:600px;">
+          <div style="background:#e3f2fd; border-radius:16px; box-shadow:0 2px 8px rgba(76,175,80,0.10); padding:1.1rem 1rem; display:flex; flex-direction:column; align-items:center;">
+            <span style="font-weight:700; color:#0288d1; font-size:1.08rem; margin-bottom:0.3rem;">Mission</span>
+            <span style="font-size:0.97rem; color:#555; text-align:center;">Empowering teens to love God and others.</span>
+          </div>
+          <div style="background:#e8f5e9; border-radius:16px; box-shadow:0 2px 8px rgba(76,175,80,0.10); padding:1.1rem 1rem; display:flex; flex-direction:column; align-items:center;">
+            <span style="font-weight:700; color:#388e3c; font-size:1.08rem; margin-bottom:0.3rem;">Vision</span>
+            <span style="font-size:0.97rem; color:#555; text-align:center;">Every teen living out their God-given purpose.</span>
+          </div>
+          <div style="background:#fffde7; border-radius:16px; box-shadow:0 2px 8px rgba(76,175,80,0.10); padding:1.1rem 1rem; display:flex; flex-direction:column; align-items:center;">
+            <span style="font-weight:700; color:#fbc02d; font-size:1.08rem; margin-bottom:0.3rem;">Community</span>
+            <span style="font-size:0.97rem; color:#555; text-align:center;">Fun, faith, and friendship for every teenager.</span>
+          </div>
+        </div>
+        <a href="about.html" class="btn btn-primary" style="background:#388e3c; color:#fff; font-weight:600; font-size:1.08rem; border-radius:16px; padding:0.7rem 2rem; box-shadow:0 2px 8px rgba(76,175,80,0.10); text-decoration:none; transition:background 0.2s; margin-top:1rem;">Learn More</a>
+      </div>
+      </div>
+    </section>
+    <div class="section-divider"></div>
+    <section class="latest-posts">
+      <div class="container latest-posts-responsive" style="background:linear-gradient(120deg,#e3f2fd 60%,#e8f5e9 100%); border-radius:32px; box-shadow:0 4px 32px rgba(76,175,80,0.10); padding:2.5rem 1.2rem; margin-bottom:2rem;">
+        <h2 style="color:#0288d1; font-size:2rem; font-weight:700; margin-bottom:2rem; text-align:center; letter-spacing:-1px;">Latest Posts & Events</h2>
+        <div class="posts-gallery" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:2rem; width:100%;">
+          <!-- Example card -->
+          <div class="post-card-modern" style="background:#fff; border-radius:24px; box-shadow:0 4px 24px rgba(76,175,80,0.10); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s;">
+            <div style="width:100%; aspect-ratio:4/3; overflow:hidden;">
+              <img src="assets/images/WhatsApp Image 2025-07-27 at 21.10.48_537dfea6.jpg" alt="Post 1" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="padding:1.2rem 1rem; display:flex; flex-direction:column; gap:0.7rem;">
+              <div style="font-size:1.15rem; font-weight:600; color:#388e3c;">Back to School Bash</div>
+              <div style="font-size:1rem; color:#555;">Join us for games, music, and inspiration as we kick off the new school year!</div>
+              <!-- <button class="share-btn" title="Share" style="align-self:flex-end; background:#e3f2fd; border:none; border-radius:50%; padding:0.5em 0.7em; box-shadow:0 2px 8px rgba(76,175,80,0.10); cursor:pointer; transition:background 0.2s;"><span style="font-size:1.2em; color:#0288d1;">&#128257;</span></button> -->
+            </div>
+          </div>
+          <div class="post-card-modern" style="background:#fff; border-radius:24px; box-shadow:0 4px 24px rgba(76,175,80,0.10); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s;">
+            <div style="width:100%; aspect-ratio:4/3; overflow:hidden;">
+              <img src="assets/images/AIP_7256.jpg" alt="Post 2" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="padding:1.2rem 1rem; display:flex; flex-direction:column; gap:0.7rem;">
+              <div style="font-size:1.15rem; font-weight:600; color:#388e3c;">Sunday Youth Service</div>
+              <div style="font-size:1rem; color:#555;">Experience powerful worship and a message just for teens every Sunday at 10am.</div>
+              <!-- <button class="share-btn" title="Share" style="align-self:flex-end; background:#e3f2fd; border:none; border-radius:50%; padding:0.5em 0.7em; box-shadow:0 2px 8px rgba(76,175,80,0.10); cursor:pointer; transition:background 0.2s;"><span style="font-size:1.2em; color:#0288d1;">&#128257;</span></button> -->
+            </div>
+          </div>
+          <div class="post-card-modern" style="background:#fff; border-radius:24px; box-shadow:0 4px 24px rgba(76,175,80,0.10); overflow:hidden; display:flex; flex-direction:column; transition:transform 0.2s;">
+            <div style="width:100%; aspect-ratio:4/3; overflow:hidden;">
+              <img src="assets/images/WhatsApp Image 2025-03-15 at 10.55.03_71d31a59.jpg" alt="Post 3" style="width:100%; height:100%; object-fit:cover;">
+            </div>
+            <div style="padding:1.2rem 1rem; display:flex; flex-direction:column; gap:0.7rem;">
+              <div style="font-size:1.15rem; font-weight:600; color:#388e3c;">Teen Hangout Night</div>
+              <div style="font-size:1rem; color:#555;">Food, fun, and friends! Don’t miss our monthly hangout night for all teens.</div>
+              <!-- <button class="share-btn" title="Share" style="align-self:flex-end; background:#e3f2fd; border:none; border-radius:50%; padding:0.5em 0.7em; box-shadow:0 2px 8px rgba(76,175,80,0.10); cursor:pointer; transition:background 0.2s;"><span style="font-size:1.2em; color:#0288d1;">&#128257;</span></button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </section>
+    <!-- <d Did you work you know anything iv class="section-divider"></div> -->
+
+    <section ></section>
+      <div class="container" style="background:linear-gradient(120deg,#e8f5e9 60%,#e3f2fd 100%); border-radius:28px; box-shadow:0 4px 24px rgba(76,175,80,0.10); padding:2.5rem 1.2rem; display:flex; flex-direction:column; align-items:center; gap:1.5rem;">
+        <h2 style="color:#0288d1; font-size:2rem; font-weight:700; margin-bottom:0.5rem; letter-spacing:-1px;">Send a Prayer Request</h2>
+        <p style="color:#388e3c; font-size:1.13rem; font-weight:500; margin-bottom:0.7rem; text-align:center; max-width:480px;">
+          Need prayer? We care! Share your request and our team will pray for you.
+        </p>
+        <a href="contact.html#prayer" class="btn btn-secondary" style="background:#388e3c; color:#fff; font-weight:600; font-size:1.15rem; border-radius:16px; padding:0.8rem 2.2rem; box-shadow:0 2px 8px rgba(76,175,80,0.10); text-decoration:none; transition:background 0.2s;">
+          Send Prayer Request
+        </a>
+      <!-- </div> -->
+    </section>
+
+  </main>
+  <footer class="footer">
+    <div class="container footer-modern" style="background:linear-gradient(120deg,#e8f5e9 60%,#e3f2fd 100%); border-radius:32px 32px 0 0; box-shadow:0 -4px 32px rgba(76,175,80,0.10); padding:2.5rem 1.2rem; margin-top:2rem; display:flex; flex-direction:column; align-items:center; gap:1.5rem;">
+      <div style="display:flex; flex-direction:column; align-items:center; gap:1.2rem; width:100%;">
+        <p style="font-size:1.15rem; color:#388e3c; font-weight:600; margin-bottom:0.3rem; text-align:center;">Contact: <a href="mailto:info@teenagerchurch.com" style="color:#0288d1; text-decoration:none;">info@teenagerchurch.com</a> | <a href="tel:+2341234567" style="color:#0288d1; text-decoration:none;">+234 123 4567</a></p>
+        <div class="social-links-modern" style="display:flex; gap:1.5rem; justify-content:center;">
+          <a href="#" aria-label="Instagram" style="background:#fff; border-radius:50%; box-shadow:0 2px 8px rgba(76,175,80,0.10); padding:0.6rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
+            <img src="assets/images/AIP_6742.jpg" alt="Instagram" style="width:38px; height:38px; border-radius:50%; object-fit:cover;">
+          </a>
+          <a href="#" aria-label="YouTube" style="background:#fff; border-radius:50%; box-shadow:0 2px 8px rgba(76,175,80,0.10); padding:0.6rem; display:flex; align-items:center; justify-content:center; transition:background 0.2s;">
+            <img src="assets/images/AIP_6742.jpg" alt="YouTube" style="width:38px; height:38px; border-radius:50%; object-fit:cover;">
+          </a>
+        </div>
+      </div>
+      <p style="font-size:1rem; color:#555; text-align:center; margin-top:1rem;">&copy; 2025 Teenager Church. All rights reserved.</p>
+    </div>
+  </footer>
+  
+</body>
+</html>
