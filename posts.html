@@ -3,13 +3,335 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teenager Church | Posts</title>
-  <link rel="stylesheet" href="assets/css/style.css">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
-  <script defer src="assets/js/posts.js"></script>
+  <title>Social Feed</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href=".//assets/css/style.css">
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
+       <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-storage-compat.js"></script>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f0f2f5;
+      color: #1c1e21;
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #4CAF50;
+      color: white;
+      padding: 15px 20px;
+      border-radius: 10px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .app-title {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .app-title i {
+      font-size: 24px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px;
+    }
+
+    .user-info span {
+      font-weight: 500;
+    }
+
+    .change-user {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 12px;
+    }
+
+    .create-post {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-input {
+      width: 100%;
+      border: 1px solid #dddfe2;
+      border-radius: 20px;
+      padding: 12px 15px;
+      margin-bottom: 10px;
+      resize: none;
+      font-size: 16px;
+    }
+
+    .post-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .post-button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      padding: 8px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      float: right;
+    }
+
+    .post-button:hover {
+      background-color: #43a047;
+    }
+
+    .post {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .post-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .user-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: #4CAF50;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+
+    .post-author {
+      font-weight: 600;
+    }
+
+    .post-time {
+      font-size: 12px;
+      color: #65676b;
+    }
+
+    .post-content {
+      margin-bottom: 15px;
+      padding: 0 5px;
+    }
+
+    .post-actions {
+      display: flex;
+      border-top: 1px solid #dddfe2;
+      border-bottom: 1px solid #dddfe2;
+      padding: 8px 0;
+      margin-bottom: 15px;
+    }
+
+    .action-button {
+      flex: 1;
+      background: none;
+      border: none;
+      padding: 8px;
+      border-radius: 5px;
+      color: #65676b;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+
+    .action-button:hover {
+      background-color: #f0f2f5;
+    }
+
+    .action-button.liked {
+      color: #4CAF50;
+    }
+
+    .comments-section {
+      margin-top: 10px;
+    }
+
+    .comment {
+      display: flex;
+      margin-bottom: 12px;
+    }
+
+    .comment-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background-color: #f0f2f5;
+      color: #4CAF50;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .comment-content {
+      flex-grow: 1;
+    }
+
+    .comment-author {
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .comment-text {
+      background-color: #f0f2f5;
+      padding: 10px;
+      border-radius: 18px;
+      margin-top: 5px;
+    }
+
+    .comment-actions {
+      display: flex;
+      margin-top: 5px;
+      font-size: 12px;
+      color: #65676b;
+    }
+
+    .comment-action {
+      margin-right: 15px;
+      cursor: pointer;
+    }
+
+    .comment-action:hover {
+      text-decoration: underline;
+    }
+
+    .replies {
+      margin-left: 40px;
+      margin-top: 10px;
+    }
+
+    .reply-input {
+      display: flex;
+      margin-top: 10px;
+    }
+
+    .reply-input-field {
+      flex-grow: 1;
+      border: 1px solid #dddfe2;
+      border-radius: 18px;
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+
+    .reply-input-field:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .modal-content {
+      background-color: white;
+      padding: 30px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .modal h2 {
+      margin-bottom: 20px;
+      color: #4CAF50;
+    }
+
+    .nickname-input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dddfe2;
+      border-radius: 5px;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    .nickname-input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .save-nickname {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      padding: 12px 20px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 10px;
+      }
+            
+      .post-actions {
+        flex-direction: column;
+        gap: 5px;
+      }
+            
+      .action-button {
+        justify-content: flex-start;
+      }
+            
+      .replies {
+        margin-left: 20px;
+      }
+    }
+  </style>
 </head>
 <body>
-   <header class="header">
+    <header class="header">
     <div class="container header-modern" style="background:rgba(255,255,255,0.75); backdrop-filter:blur(12px); border-radius:24px; box-shadow:0 2px 16px rgba(76,175,80,0.10); padding:1.1rem 1.2rem; margin-top:1.2rem; display:flex; align-items:center; justify-content:space-between; gap:2rem;">
       <div class="logo-modern" style="display:flex; align-items:center; gap:1rem;">
         <img src="assets/images/AIP_6742.jpg" alt="Logo" style="width:48px; height:48px; border-radius:50%; object-fit:cover; box-shadow:0 2px 8px rgba(76,175,80,0.10);">
@@ -26,22 +348,394 @@
       </nav>
     </div>
   </header>
-  <main>
-    <section class="posts-filter">
-      <div class="container">
-        <button class="btn btn-secondary" data-filter="all">All</button>
-        <button class="btn btn-secondary" data-filter="messages">Messages</button>
-        <button class="btn btn-secondary" data-filter="events">Events</button>
+  <div class="container">
+    <header>
+      <div class="app-title">
+        <i class="fab fa-facebook"></i>
+        <h1>Social Feed</h1>
       </div>
-    </section>
-    <section class="posts-list">
-      <div class="container">
-        <div class="posts-grid" id="posts-list">
-          <!-- Dynamic posts will be loaded here -->
-        </div>
+      <div class="user-info">
+        <span id="current-user">Guest</span>
+        <button class="change-user" onclick="changeUser()">Change User</button>
       </div>
-    </section>
-  </main>
+    </header>
+
+    <div class="create-post" id="create-post-section" style="display:none;">
+      <textarea class="post-input" placeholder="What's on your mind?" id="post-content"></textarea>
+      <input type="file" id="post-image" accept="image/*" style="margin: 10px 0; display: block;">
+      <button class="post-button" onclick="createPost()">Post</button>
+      <div style="clear: both;"></div>
+    </div>
+
+    <div id="posts-container">
+      <!-- Posts will be loaded here -->
+    </div>
+  </div>
+
+  <div class="modal" id="nickname-modal">
+    <div class="modal-content">
+      <h2>Choose Your Nickname</h2>
+      <input type="text" class="nickname-input" placeholder="Enter your nickname" id="nickname-input">
+      <button class="save-nickname" onclick="saveNickname()">Save</button>
+    </div>
+  </div>
+
+  <script>
+
+    // Firebase SDK (add these to your HTML for production):
+          //  Firebase config
+    const firebaseConfig = {
+      apiKey: "AIzaSyCZQESy3ki4tauDLtmN6sJT49HvcQONICA",
+      authDomain: "agape-force-7c014.firebaseapp.com",
+      projectId: "agape-force-7c014",
+      storageBucket: "agape-force-7c014.appspot.com",
+      messagingSenderId: "833486382704",
+      appId: "1:833486382704:web:8e2ff2c78fa7503686b6b5"
+    };
+    if (typeof firebase === 'undefined') {
+      alert('Firebase SDK not loaded! Please add the Firebase CDN scripts to your HTML.');
+    } else {
+      firebase.initializeApp(firebaseConfig);
+      var db = firebase.firestore();
+      var storage = firebase.storage();
+    }
+
+    let currentUser = null;
+
+    async function init() {
+      // Check if user has a nickname in localStorage
+      const savedUser = localStorage.getItem('socialFeedUser');
+      if (savedUser) {
+        currentUser = savedUser;
+        document.getElementById('current-user').textContent = currentUser;
+      } else {
+        document.getElementById('nickname-modal').style.display = 'flex';
+      }
+      // Only show post form if user is admin
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';
+      document.getElementById('create-post-section').style.display = isAdmin ? 'block' : 'none';
+      // Render posts from Firestore
+      await renderPosts();
+    }
+
+    async function createPost() {
+      if (localStorage.getItem('isAdmin') !== 'true') {
+        alert('Only admins can post. Please log in as admin.');
+        return;
+      }
+      if (!currentUser) {
+        alert('Please set a nickname first!');
+        document.getElementById('nickname-modal').style.display = 'flex';
+        return;
+      }
+      const postContent = document.getElementById('post-content');
+      const content = postContent.value.trim();
+      const postImageInput = document.getElementById('post-image');
+      const file = postImageInput.files[0];
+      if (!content && !file) return;
+      let imageUrl = null;
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = async function(e) {
+          try {
+            const storageRef = storage.ref();
+            const fileName = 'post_images/' + Date.now() + '_' + Math.floor(Math.random()*10000) + '.jpg';
+            const imgRef = storageRef.child(fileName);
+            const snapshot = await imgRef.putString(e.target.result, 'data_url');
+            imageUrl = await snapshot.ref.getDownloadURL();
+            await db.collection('posts').add({
+              author: currentUser,
+              content: content,
+              image: imageUrl,
+              timestamp: new Date().toISOString(),
+              likes: 0,
+              liked: false
+            });
+            await renderPosts();
+            postContent.value = '';
+            postImageInput.value = '';
+          } catch (err) {
+            alert('Image upload failed: ' + err.message);
+          }
+        };
+        reader.readAsDataURL(file);
+      } else {
+        try {
+          await db.collection('posts').add({
+            author: currentUser,
+            content: content,
+            image: null,
+            timestamp: new Date().toISOString(),
+            likes: 0,
+            liked: false
+          });
+          await renderPosts();
+          postContent.value = '';
+          postImageInput.value = '';
+        } catch (err) {
+          alert('Failed to save post: ' + err.message);
+        }
+      }
+    }
+
+    async function renderPosts() {
+      const postsContainer = document.getElementById('posts-container');
+      postsContainer.innerHTML = '';
+      try {
+        const snapshot = await db.collection('posts').orderBy('timestamp', 'desc').get();
+        if (snapshot.empty) {
+          if (localStorage.getItem('isAdmin') === 'true') {
+            postsContainer.innerHTML = '<div class="post"><div class="post-content">No posts yet. Be the first to post!</div></div>';
+          }
+          return;
+        }
+        for (const doc of snapshot.docs) {
+          const post = doc.data();
+          const postId = doc.id;
+          const postElement = document.createElement('div');
+          postElement.className = 'post';
+          const postTime = new Date(post.timestamp);
+          const timeString = postTime.toLocaleString();
+          let imageHTML = '';
+          if (post.image) {
+            imageHTML = `<div style="margin: 10px 0;"><img src="${post.image}" alt="Post Image" style="max-width:100%; border-radius:10px;"></div>`;
+          }
+          // Fetch comments for this post
+          const commentsHTML = await renderComments(postId);
+          postElement.innerHTML = `
+            <div class="post-header">
+              <div class="user-avatar">${post.author.charAt(0)}</div>
+              <div>
+                <div class="post-author">${post.author}</div>
+                <div class="post-time">${timeString}</div>
+              </div>
+            </div>
+            <div class="post-content">${post.content}</div>
+            ${imageHTML}
+            <div class="post-actions">
+              <button class="action-button" disabled><i class="fas fa-thumbs-up"></i> Like (${post.likes || 0})</button>
+              <button class="action-button" disabled><i class="fas fa-comment"></i> Comment</button>
+            </div>
+            <div class="comments-section" id="comments-section-${postId}">
+              ${commentsHTML}
+              <div class="comment">
+                <div class="comment-avatar">${currentUser ? currentUser.charAt(0) : 'G'}</div>
+                <div class="comment-content">
+                  <input type="text" class="reply-input-field" id="comment-input-${postId}" placeholder="Write a comment...">
+                  <button class="post-button" style="margin-top: 5px; padding: 5px 15px;" onclick="addComment('${postId}', 'comment-input-${postId}')">Comment</button>
+                </div>
+              </div>
+            </div>
+          `;
+          postsContainer.appendChild(postElement);
+        }
+      } catch (e) {
+        postsContainer.innerHTML = '<div class="post"><div class="post-content">Error loading posts: ' + e.message + '</div></div>';
+      }
+    }
+
+    async function renderComments(postId) {
+      let commentsHTML = '';
+      try {
+        const commentsSnap = await db.collection('posts').doc(postId).collection('comments').orderBy('timestamp', 'asc').get();
+        if (commentsSnap.empty) return '';
+        for (const doc of commentsSnap.docs) {
+          const comment = doc.data();
+          const commentId = doc.id;
+          const commentTime = new Date(comment.timestamp);
+          const timeString = commentTime.toLocaleString();
+          const repliesHTML = await renderReplies(postId, commentId);
+          commentsHTML += `
+            <div class="comment">
+              <div class="comment-avatar">${comment.author.charAt(0)}</div>
+              <div class="comment-content">
+                <div class="comment-author">${comment.author} <span class="comment-time">${timeString}</span></div>
+                <div class="comment-text">${comment.content}</div>
+                <div class="comment-actions"></div>
+                ${repliesHTML}
+                <div class="reply-input">
+                  <input type="text" class="reply-input-field" id="reply-input-${commentId}" placeholder="Write a reply...">
+                  <button class="post-button" style="margin-left: 5px; padding: 5px 15px;" onclick="addReply('${postId}', '${commentId}', 'reply-input-${commentId}')">Reply</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (e) {
+        commentsHTML += '<div class="comment"><div class="comment-content">Error loading comments: ' + e.message + '</div></div>';
+      }
+      return commentsHTML;
+    }
+
+    async function renderReplies(postId, commentId) {
+      let repliesHTML = '<div class="replies">';
+      try {
+        const repliesSnap = await db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies').orderBy('timestamp', 'asc').get();
+        if (repliesSnap.empty) return '';
+        for (const doc of repliesSnap.docs) {
+          const reply = doc.data();
+          const replyTime = new Date(reply.timestamp);
+          const timeString = replyTime.toLocaleString();
+          repliesHTML += `
+            <div class="comment">
+              <div class="comment-avatar">${reply.author.charAt(0)}</div>
+              <div class="comment-content">
+                <div class="comment-author">${reply.author} <span class="comment-time">${timeString}</span></div>
+                <div class="comment-text">${reply.content}</div>
+              </div>
+            </div>
+          `;
+        }
+      } catch (e) {
+        repliesHTML += '<div class="comment-content">Error loading replies: ' + e.message + '</div>';
+      }
+      repliesHTML += '</div>';
+      return repliesHTML;
+    }
+
+    async function addComment(postId, commentInputId) {
+      if (!currentUser) {
+        alert('Please set a nickname first!');
+        document.getElementById('nickname-modal').style.display = 'flex';
+        return;
+      }
+      const commentInput = document.getElementById(commentInputId);
+      const content = commentInput.value.trim();
+      if (!content) return;
+      try {
+        await db.collection('posts').doc(postId).collection('comments').add({
+          author: currentUser,
+          content: content,
+          timestamp: new Date().toISOString()
+        });
+        await renderPosts();
+      } catch (e) {
+        alert('Failed to add comment: ' + e.message);
+      }
+    }
+
+    async function addReply(postId, commentId, replyInputId) {
+      if (!currentUser) {
+        alert('Please set a nickname first!');
+        document.getElementById('nickname-modal').style.display = 'flex';
+        return;
+      }
+      const replyInput = document.getElementById(replyInputId);
+      const content = replyInput.value.trim();
+      if (!content) return;
+      try {
+        await db.collection('posts').doc(postId).collection('comments').doc(commentId).collection('replies').add({
+          author: currentUser,
+          content: content,
+          timestamp: new Date().toISOString()
+        });
+        await renderPosts();
+      } catch (e) {
+        alert('Failed to add reply: ' + e.message);
+      }
+    }
+
+    window.onload = init;
+
+    // Save nickname to localStorage
+    function saveNickname() {
+      const nicknameInput = document.getElementById('nickname-input');
+      const nickname = nicknameInput.value.trim();
+            
+      if (nickname) {
+        currentUser = nickname;
+        localStorage.setItem('socialFeedUser', currentUser);
+        document.getElementById('current-user').textContent = currentUser;
+        document.getElementById('nickname-modal').style.display = 'none';
+      }
+    }
+
+    // Change user nickname
+    function changeUser() {
+      localStorage.removeItem('socialFeedUser');
+      currentUser = null;
+      document.getElementById('current-user').textContent = 'Guest';
+      document.getElementById('nickname-modal').style.display = 'flex';
+    }
+
+    // Create a new post
+    function createPost() {
+      // Only allow admin
+      if (localStorage.getItem('isAdmin') !== 'true') {
+        alert('Only admins can post. Please log in as admin.');
+        return;
+      }
+      if (!currentUser) {
+        alert('Please set a nickname first!');
+        document.getElementById('nickname-modal').style.display = 'flex';
+        return;
+      }
+
+      const postContent = document.getElementById('post-content');
+      const content = postContent.value.trim();
+      const postImageInput = document.getElementById('post-image');
+      const file = postImageInput.files[0];
+
+      if (!content && !file) {
+        return;
+      }
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          const newPost = {
+            id: Date.now(),
+            author: currentUser,
+            content: content,
+            image: e.target.result,
+            timestamp: new Date().toISOString(),
+            likes: 0,
+            liked: false,
+            comments: []
+          };
+          feedData.posts.unshift(newPost);
+          saveData();
+          renderPosts();
+          postContent.value = '';
+          postImageInput.value = '';
+        };
+        reader.readAsDataURL(file);
+      } else {
+        const newPost = {
+          id: Date.now(),
+          author: currentUser,
+          content: content,
+          image: null,
+          timestamp: new Date().toISOString(),
+          likes: 0,
+          liked: false,
+          comments: []
+        };
+        feedData.posts.unshift(newPost);
+        saveData();
+        renderPosts();
+        postContent.value = '';
+        postImageInput.value = '';
+      }
+    }
+ </script>
+    <!-- // Toggle like on a post
+  // (Firestore-based addComment, addReply, and like logic is now defined above)
+
+    // Add a reply to a comment
+  // (Firestore-based addReply is now defined above)
+
+    // Render all posts
+  // (Firestore-based renderPosts is now defined above)
+
+    // Render comments for a post
+  // (Firestore-based renderComments is now defined above)
+      post.comments.forEach(comment => {
+  // (Firestore-based renderComments and renderReplies are now defined above)
+
+    // Initialize the application when the page loads
+    window.onload = init; -->
+ 
   <footer class="footer">
     <div class="container">
       <div class="footer-info">
